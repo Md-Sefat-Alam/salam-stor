@@ -22,16 +22,31 @@ const showProducts = (products) => {
     const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
+
     div.innerHTML = `<div class="single-product">
-      <div>
-    <img class="product-image" src='${image}'></img>
-      </div>
-      <h3>${product.title}</h3>
-      <p>Category: <span>${product.category}</span></p>
-      <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
-      `;
+                        <div>
+                          <img class="product-image" src='${image}' alt="${product.title}"></img>
+                        </div>
+                        <h3>${product.title}</h3>
+                        <p>Category: <span>${product.category}</span></p>
+
+                        <div>
+                          <span id="rateStars">
+                            <i>${product.rating.rate}</i>
+                          </span>
+
+                          <span> count </span>
+                          <span class="rating-count">
+                            ${product.rating.count}
+                          </span>
+                        </div>
+
+                        <h2>Price: $ ${product.price}</h2>
+                        <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
+                        <button id="details-btn" class="btn btn-danger">Details</button>
+                      </div>`;
+
+
     document.getElementById("all-products").appendChild(div);
   }
 };
@@ -89,8 +104,37 @@ const updateTotal = () => {
 };
 
 
+// create rating stars dynamically change stars
 
 
+/* 
+<span>
+
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+
+
+                            <i class="fas fa-star-half-alt"></i>
+                            
+                            
+                          </span>
+                          
+*/
+document.getElementById('search-btn').addEventListener('click', () => {
+  const inputField = document.getElementById('input-field');
+  const inputFieldText = inputField.value;
+  if (inputFieldText) {
+    document.title = inputFieldText
+  }
+  else {
+    document.title = "Product Stor"
+  }
+})
+const changeTitle = () => {
+
+}
 
 
 showProducts(data);
