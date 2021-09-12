@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FakeStore</title>
-  <link rel="stylesheet" href="./css/style.css" />
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
@@ -15,30 +14,71 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/ef9bee4ef3.js" crossorigin="anonymous"></script>
+
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="./css/style.css" />
+
 </head>
 
 <body>
-  <header></header>
-  <main class="main">
+  <header>
     <div class="search-field">
       <div class="search-box">
-        <input id="input-field" class="search-field" type="text" />
+        <input id="input-field" class="" type="text" placeholder="Enter Search Text..." />
         <button type="button" class="btn btn-primary search-button" data-toggle="button" aria-pressed="false"
           autocomplete="off" id="search-btn" onclick="loadProducts()">
           Search
         </button>
       </div>
     </div>
+  </header>
+  <main class="main container">
     <div class="row">
       <div class="col-md-9 col-lg-9 col-sm-7">
         <div id="all-products" class="">
           <!-- all products will dynamically add here -->
+          <div class="product">
+            <div class="single-product card">
+              <div>
+                <img class="product-image" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg">
+              </div>
+              <h3 class="fs-5">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h3>
+              <p>Category: <span>men's clothing</span></p>
+              <div>
+                <span>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+
+
+                  <i class="fas fa-star-half-alt"></i>
+                </span>
+                <span> count </span>
+                <span class="rating-count">
+                  500
+                </span>
+              </div>
+              <h2>Price: $ 109.95</h2>
+              <button onclick="addToCart(1,109.95)" id="addToCart-btn" class="buy-now btn btn-success">add to
+                cart</button>
+              <button id="details-btn" class="btn btn-danger">Details</button>
+            </div>
+          </div>
         </div>
       </div>
+
+
+
+
       <div class="col-md-3 col-lg-3 col-sm-5 cart-main">
         <div class="cart" id="my-cart">
           <table class="table">
-            <thead>
+            <caption class="fs-1">My-Cart</caption>
+            <!-- <thead>
               <h1>My-Cart</h1>
               <tr>
                 <th scope="col"></th>
@@ -46,7 +86,7 @@
                 <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
-            </thead>
+            </thead> -->
             <tbody>
               <tr>
                 <th>Total Added-Products:</th>
