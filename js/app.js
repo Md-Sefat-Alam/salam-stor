@@ -1,8 +1,17 @@
+let data;
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => showProducts(data));
+  // fetch(url)
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     showProducts(data);
+  //     console.log(data)
+  //     const localData = JSON.stringify(data);
+  //     localStorage.setItem("data", localData)
+  //   });
+  const getLocalData = localStorage.getItem('data');
+  data = JSON.parse(getLocalData);
+  console.log(data)
 };
 loadProducts();
 
@@ -10,12 +19,12 @@ loadProducts();
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
-    const image = product.images;
+    const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
     div.innerHTML = `<div class="single-product">
       <div>
-    <img class="product-image" src=${image}></img>
+    <img class="product-image" src='${image}'></img>
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
@@ -29,7 +38,7 @@ const showProducts = (products) => {
 let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
-  updatePrice("price", price);
+  updatePrice("total", price);
 
   updateTaxAndCharge();
   document.getElementById("total-Products").innerText = count;
@@ -46,7 +55,7 @@ const updatePrice = (id, value) => {
   const convertedOldPrice = getInputValue(id);
   const convertPrice = parseFloat(value);
   const total = convertedOldPrice + convertPrice;
-  document.getElementById(id).innerText = Math.round(total);
+  document.getElementById(id).innerText = total.toFixed(2);
 };
 
 // set innerText function
@@ -78,3 +87,10 @@ const updateTotal = () => {
     getInputValue("total-tax");
   document.getElementById("total").innerText = grandTotal;
 };
+
+
+
+
+
+
+showProducts(data);
