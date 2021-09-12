@@ -122,19 +122,40 @@ const updateTotal = () => {
                           </span>
                           
 */
+
+document.getElementById('input-field').addEventListener('focus', () => {
+  document.getElementById("input-field").style = `background-color: white;`
+});
+document.getElementById('input-field').addEventListener('blur', () => {
+  document.getElementById("input-field").style = `background-color: rgba(240, 236, 236, 0.322);`
+});
+document.getElementById('search-btn').addEventListener('focus', () => {
+  document.getElementById("search-btn").style = `background-color: rgba(255, 255, 255, 0.664);
+  color:gray;
+  outline: none;`
+});
+document.getElementById('search-btn').addEventListener('mousemove', () => {
+  document.getElementById("search-btn").style = `background-color: rgba(255, 255, 255, 0.664);
+  color:rgba(0, 128, 0, 0.63);
+  box-shadow: inset 0px 0px 20px gray;
+  outline: none;`
+});
+document.getElementById('search-btn').addEventListener('mouseout', () => {
+  document.getElementById("search-btn").style = `background-color: rgba(255, 255, 255, 0.664);
+  color:gray;
+  box-shadow: inset 0px 0px 15px gray;
+  outline: none;`
+});
 document.getElementById('search-btn').addEventListener('click', () => {
   const inputField = document.getElementById('input-field');
   const inputFieldText = inputField.value;
   if (inputFieldText) {
-    document.title = inputFieldText
+    document.title = inputFieldText + " - Salam Stor Search"
   }
   else {
-    document.title = "Product Stor"
+    document.title = "Salam Stor"
   }
 })
-const changeTitle = () => {
-
-}
 
 
 showProducts(data);
