@@ -1,17 +1,16 @@
-let data;
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
-  // fetch(url)
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     showProducts(data);
-  //     console.log(data)
-  //     const localData = JSON.stringify(data);
-  //     localStorage.setItem("data", localData)
-  //   });
-  const getLocalData = localStorage.getItem('data');
-  data = JSON.parse(getLocalData);
-  console.log(data)
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      showProducts(data);
+      console.log(data)
+      // const localData = JSON.stringify(data);
+      // localStorage.setItem("data", localData)
+    });
+  // const getLocalData = localStorage.getItem('data');
+  // data = JSON.parse(getLocalData);
+  // console.log(data)
 };
 loadProducts();
 
@@ -45,8 +44,6 @@ const showProducts = (products) => {
                         <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
                         <button id="details-btn" class="btn btn-danger">Details</button>
                       </div>`;
-
-
     document.getElementById("all-products").appendChild(div);
   }
 };
@@ -123,12 +120,12 @@ const updateTotal = () => {
                           
 */
 
-document.getElementById('input-field').addEventListener('focus', () => {
-  document.getElementById("input-field").style = `background-color: white;`
-});
-document.getElementById('input-field').addEventListener('blur', () => {
-  document.getElementById("input-field").style = `background-color: rgba(240, 236, 236, 0.322);`
-});
+// document.getElementById('input-field').addEventListener('focus', () => {
+//   document.getElementById("input-field").style = `background-color: lightgray;`
+// });
+// document.getElementById('input-field').addEventListener('blur', () => {
+//   document.getElementById("input-field").style = `background-color: rgba(240, 236, 236, 0.322);`
+// });
 document.getElementById('search-btn').addEventListener('focus', () => {
   document.getElementById("search-btn").style = `background-color: rgba(255, 255, 255, 0.664);
   color:gray;
@@ -156,6 +153,3 @@ document.getElementById('search-btn').addEventListener('click', () => {
     document.title = "Salam Stor"
   }
 })
-
-
-showProducts(data);

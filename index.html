@@ -58,37 +58,45 @@
                 <th scope="col"></th>
               </tr>
             </thead> -->
-            <tbody>
+            <tbody">
               <tr>
-                <th>Total Added-Products:</th>
-                <td><span id="total-Products">0</span></td>
-                <td></td>
-                <td></td>
+                <td>Total Added-Products:</td>
+                <td><span id="total-Products" style="color: black; font-weight: bold;">0</span></td>
               </tr>
+
+              <div id="selectedItemDetail">
+                <tr style="background-color: rgb(245, 241, 241);">
+
+                  <td>
+                    <p id="product Id">productId: <span style="color: black; font-weight: bold;">000000</span></p>
+                    <p title="Catagory">Cat. <span style="color: black; font-weight: bold;">Electronics</span></p>
+                  </td>
+
+                  <td>
+                    <p>Price: <span style="color: black; font-weight: bold;">000000</span></p>
+                    <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input min="0" max="10"
+                          type="number" style="width: 35px; " value="1"></span></p>
+                  </td>
+                </tr>
+              </div>
+
+
               <tr>
-                <th>Price:</th>
-                <td>$ <span id="price">0</span></td>
-                <td></td>
-                <td></td>
+                <td>Delivery-Charge:</td>
+                <td>$ <span id="delivery-charge" style="color: black; font-weight: bold;">20</span></td>
               </tr>
+
               <tr>
-                <th>Delivery-Charge:</th>
-                <td>$ <span id="delivery-charge">20</span></td>
-                <td></td>
-                <td></td>
+                <td>Total-Tax:</td>
+                <td>$ <span id="total-tax" style="color: black; font-weight: bold;">0</span></td>
               </tr>
-              <tr>
-                <th>Total-Tax:</th>
-                <td>$ <span id="total-tax">0</span></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="row">Total</th>
-                <td colspan="2">$ <span id="total">0</span></td>
-                <td></td>
-              </tr>
-            </tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  <td colspan="2">$ <span id="total" style="color: black; font-weight: bold;">0</span></td>
+                </tr>
+              </tfoot>
           </table>
           <div class="parces text-center">
             <button class="btn btn-primary text-center">Buy Now</button>
