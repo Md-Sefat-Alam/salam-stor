@@ -1,5 +1,6 @@
 let data;
 let productsSelectedId = [];
+let itemPrice = 0;
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
@@ -57,6 +58,8 @@ const addToCart = (id, price) => {
   // updatePrice("total", price);
   // updateTaxAndCharge();
 
+  itemPrice = price;
+
   if (!productsSelectedId.includes(id)) {
     productsSelectedId.push(id);
   }
@@ -81,9 +84,11 @@ const showSelectedItem = (selectedId) => {
       </td>
 
       <td>
-        <p>Price: <span class = 'productPriceing' style="color: black; font-weight: bold;">${serverId.price}</span></p>
-        <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input min="0" max="10"
+        <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input class="quantityValue" min="1" max="5"
               type="number" style="width: 35px; " value="1"></span></p>
+
+        <p>Price: <span class = 'productPriceing' style="color: black; font-weight: bold;">${serverId.price}</span></p>
+        
       </td>`
         selectedItemDetail.appendChild(tr);
         const changeToSelect = window.event.target.parentNode;
@@ -94,17 +99,57 @@ const showSelectedItem = (selectedId) => {
   updateSubTotal();
 }
 
+// create subtotal value and set it
 const updateSubTotal = () => {
   const getSubTotal = document.querySelectorAll('.productPriceing');
   let subTotal = 0;
   for (const singlePrice of getSubTotal) {
     subTotal += parseFloat(singlePrice.innerText)
   }
+
   if (productsSelectedId.length !== 0) {
-    document.getElementById('subTotalShow').style = 'visibility: visible;background-color: rgb(215, 241, 241);'
+    document.getElementById('subTotalShow').style = 'visibility: visible;background-color: rgba(0, 0, 0, 0.355); color: white;'
   }
   document.getElementById('subTotal').innerText = subTotal.toFixed(2);
+  updateTaxAndCharge();
+  updateTotal();
 }
+
+// try to find by id price
+const productPrice = (getId) => {
+  const getIdInt = parseInt(getId);
+  let price = 0;
+  for (const serverId of data) {
+    if (getIdInt === serverId.id) {
+      price = serverId.price;
+    }
+  }
+  return parseFloat(price);
+}
+
+
+document.getElementById("selectedItemDetail").addEventListener('click', function (event) {
+
+  if (event.target.classList[0] === 'quantityValue') {
+    const getQuantity = event.target.value
+    const priceParent = event.target.parentNode.parentNode.parentNode;
+    //get product id for identify uniquely
+    const productId = event.target.parentNode.parentNode.parentNode.parentNode.
+      childNodes[1].childNodes[1].childNodes[1].innerText;
+
+    const mainPrice = productPrice(productId);
+    console.log(mainPrice)
+
+    //get price element for change it
+    const selectPrice = priceParent.childNodes[3].childNodes[1]
+    const getQuantityNumber = parseInt(getQuantity);
+
+    const result = mainPrice * getQuantityNumber;
+    selectPrice.innerText = result;
+    //update total value
+    updateSubTotal();
+  }
+})
 
 
 const getInputValue = (id) => {
@@ -118,17 +163,21 @@ const updatePrice = (id, value) => {
   const convertedOldPrice = getInputValue(id);
   const convertPrice = parseFloat(value);
   const total = convertedOldPrice + convertPrice;
-  document.getElementById(id).innerText = total.toFixed(2);
+  document.getElementById(id).innerText = total;
 };
 
 // set innerText function
 const setInnerText = (id, value) => {
-  document.getElementById(id).innerText = Math.round(value);
+  document.getElementById(id).innerText = value.toFixed(2);
 };
 
-// update delivery charge and total Tax
+// update delivery charge and total Tax 
 const updateTaxAndCharge = () => {
-  const priceConverted = getInputValue("price");
+  const priceConverted = getInputValue("subTotal");
+  if (priceConverted <= 200) {
+    setInnerText("delivery-charge", 20);
+    setInnerText("total-tax", priceConverted * 0.2);
+  }
   if (priceConverted > 200) {
     setInnerText("delivery-charge", 30);
     setInnerText("total-tax", priceConverted * 0.2);
@@ -145,10 +194,12 @@ const updateTaxAndCharge = () => {
 
 //grandTotal update function
 const updateTotal = () => {
-  const grandTotal =
-    getInputValue("price") + getInputValue("delivery-charge") +
-    getInputValue("total-tax");
-  document.getElementById("total").innerText = grandTotal;
+  const subTotal = getInputValue('subTotal');
+  const deliveryCharg = getInputValue('delivery-charge');
+  const totalTax = getInputValue('total-tax');
+
+  const grandTotal = subTotal + deliveryCharg + totalTax;
+  document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
 
 
@@ -203,11 +254,6 @@ document.getElementById('search-btn').addEventListener('click', () => {
   else {
     document.title = "Salam Stor"
   }
-})
-
-
-document.getElementById("selectedItemDetail").addEventListener('click', function (event) {
-  console.log('clicked')
 })
 
 
