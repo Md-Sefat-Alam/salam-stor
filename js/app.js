@@ -5,27 +5,28 @@ const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
     .then((response) => response.json())
-    .then((data) => {
-      // showProducts(data);
-      // console.log(data)
-      // const localData = JSON.stringify(data);
-      // localStorage.setItem("data", localData)
+    .then((serverData) => {
+      showProducts(serverData);
     });
-  const getLocalData = localStorage.getItem('data');
-  data = JSON.parse(getLocalData);
-  console.log(data)
 };
 loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
+  // set all product to data because ints need bellow
+  data = products;
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
 
-    div.innerHTML = `<div class="single-product">
+    div.innerHTML = ` <div class="single-product">
+                          <div id="productId"
+                          style="text-align: left;margin-left:30px; font-size: 20px; font-weight: bolder; color: gray; cursor: pointer;">
+                          Id-
+                          <span>${product.id}</span>
+                        </div>
                         <div>
                           <img class="product-image" src='${image}' alt="${product.title}"></img>
                         </div>
@@ -45,30 +46,23 @@ const showProducts = (products) => {
 
                         <h2>Price: $ ${product.price}</h2>
                         <button onclick="addToCart(${product.id}, ${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-                        <button id="details-btn" class="btn btn-danger">Details</button>
+                        <button class="btn btn-danger">Details</button>
                       </div>`;
     document.getElementById("all-products").appendChild(div);
   }
 };
 
+//add to cart function handle cart
 const addToCart = (id, price) => {
-  // console.log(id)
-  // console.log(price)
-  // count = count + 1;
-  // updatePrice("total", price);
-  // updateTaxAndCharge();
-
   itemPrice = price;
-
   if (!productsSelectedId.includes(id)) {
     productsSelectedId.push(id);
   }
-
   document.getElementById("total-Products").innerText = productsSelectedId.length;
   showSelectedItem(productsSelectedId);
 };
 
-
+//showing selected item on cart
 const showSelectedItem = (selectedId) => {
   const selectedItemDetail = document.getElementById('selectedItemDetail');
   selectedItemDetail.textContent = '';
@@ -96,6 +90,7 @@ const showSelectedItem = (selectedId) => {
       }
     }
   }
+  //calling for update subtotal
   updateSubTotal();
 }
 
@@ -115,7 +110,7 @@ const updateSubTotal = () => {
   updateTotal();
 }
 
-// try to find by id price
+// try to find price by id 
 const productPrice = (getId) => {
   const getIdInt = parseInt(getId);
   let price = 0;
@@ -128,6 +123,7 @@ const productPrice = (getId) => {
 }
 
 
+// working for quantity
 document.getElementById("selectedItemDetail").addEventListener('click', function (event) {
 
   if (event.target.classList[0] === 'quantityValue') {
@@ -151,7 +147,31 @@ document.getElementById("selectedItemDetail").addEventListener('click', function
   }
 })
 
+//if write on quantity it will be changed
+document.getElementById("selectedItemDetail").addEventListener('keyup', function (event) {
 
+  if (event.target.classList[0] === 'quantityValue') {
+    const getQuantity = event.target.value
+    const priceParent = event.target.parentNode.parentNode.parentNode;
+    //get product id for identify uniquely
+    const productId = event.target.parentNode.parentNode.parentNode.parentNode.
+      childNodes[1].childNodes[1].childNodes[1].innerText;
+
+    const mainPrice = productPrice(productId);
+    console.log(mainPrice)
+
+    //get price element for change it
+    const selectPrice = priceParent.childNodes[3].childNodes[1]
+    const getQuantityNumber = parseInt(getQuantity);
+
+    const result = mainPrice * getQuantityNumber;
+    selectPrice.innerText = result;
+    //update total value
+    updateSubTotal();
+  }
+})
+
+//get element innerText float value
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
   const converted = parseFloat(element);
@@ -202,32 +222,7 @@ const updateTotal = () => {
   document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
 
-
-// create rating stars dynamically change stars
-
-
-/* 
-<span>
-
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-
-
-                            <i class="fas fa-star-half-alt"></i>
-                            
-                            
-                          </span>
-                          
-*/
-
-// document.getElementById('input-field').addEventListener('focus', () => {
-//   document.getElementById("input-field").style = `background-color: lightgray;`
-// });
-// document.getElementById('input-field').addEventListener('blur', () => {
-//   document.getElementById("input-field").style = `background-color: rgba(240, 236, 236, 0.322);`
-// });
+//try to search box fency
 document.getElementById('search-btn').addEventListener('focus', () => {
   document.getElementById("search-btn").style = `background-color: rgba(255, 255, 255, 0.664);
   color:gray;
@@ -257,4 +252,52 @@ document.getElementById('search-btn').addEventListener('click', () => {
 })
 
 
-showProducts(data);
+//add carousel [detail button action]
+const carousel = document.getElementById('carousel');
+document.getElementById('all-products').addEventListener('click', function (event) {
+
+  if (event.target.innerText === "Details") {
+    const productId = event.target.parentNode.childNodes[1].childNodes[1].innerText;
+    const productIdNum = parseInt(productId);
+    // console.log(productIdNum);
+
+    fetch(`https://fakestoreapi.com/products/${productIdNum}`)
+      .then(res => res.json())
+      .then(data => {
+        //carousel display block
+        carousel.style.display = 'block'
+        carouselDataLoad(data)
+      })
+  }
+})
+
+// carouselDataLoad and show
+const carouselDataLoad = (carouselData) => {
+  console.log(carouselData)
+  carousel.innerHTML = `
+  <div id="carouselInfo" style="position: relative;">
+  <span style="display: block; text-align: center; font-size: 20px;">
+    Id: <span style="font-size: 30px; font-weight: bold; color: gray;">${carouselData.id}</span>
+  </span>
+  <div style="display: flex; justify-content: center; transform: rotate(5deg);">
+    <img width="30%" src='${carouselData.image}' alt="">
+  </div>
+  <div style="width: 95%; display: flex; flex-direction: column; margin: 30px auto;">
+    <p style="color: black; font-size: 20px;">Title: <span style="color: gray; font-weight: bold;">${carouselData.title}</span></p>
+    <p style="color: black; font-size: 15px;">Category: <span style="color: gray; font-weight: bold;">${carouselData.category}</span></p>
+
+
+    <p style="color: black; font-size: 15px;">description: <span>${carouselData.description}</span></p>
+  </div>
+  <div onclick="carouselClose()"
+    style="position: absolute; top: 10px; right: 15px; font-size: 20px; font-weight: bolder; color: red; cursor: pointer;">
+    X
+  </div>
+</div>
+`
+}
+// click close carouse display none
+const carouselClose = () => {
+  carousel.style.display = 'none'
+}
+

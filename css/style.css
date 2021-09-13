@@ -8,12 +8,12 @@ body {
 }
 header{
   z-index: 999999;
-  background-color: rgba(248, 237, 237, 0.535);
+  background-color: rgba(248, 237, 237, 0.857);
   height: 70px;
   position: fixed;
   width: 100%;
   top: 0;
-  box-shadow: inset 0px -15px 20px rgba(0, 0, 0, 0.349);
+  box-shadow: inset 0px -15px 20px rgba(0, 0, 0, 0.473);
   
   display: flex;
   flex-direction: row;
@@ -139,3 +139,29 @@ table caption{
   font-weight: bold;
 }
 
+
+/* media query */
+@media only screen and (max-width: 768px) {
+  #all-products {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cart {
+    /* width: 300px; */
+    /* border: 1px solid green; */
+    padding: 10px;
+    box-shadow: 10px 10px 20px gray;
+    border-radius: 5px;
+    margin-right: 30px;
+    position: fixed;
+  }
+  .cart-main {
+    padding-right: 10px;
+  }
+}
+@media only screen and (max-width: 468px) {
+  #all-products {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
