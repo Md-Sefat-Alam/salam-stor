@@ -49,38 +49,33 @@
         <div class="cart" id="my-cart">
           <table class="table">
             <caption class="fs-1">My-Cart</caption>
-            <!-- <thead>
-              <h1>My-Cart</h1>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-              </tr>
-            </thead> -->
-            <tbody">
+            <thead>
               <tr>
                 <td>Total Added-Products:</td>
                 <td><span id="total-Products" style="color: black; font-weight: bold;">0</span></td>
               </tr>
+            </thead>
+            <tbody id="selectedItemDetail">
+              <!-- <tr style="background-color: rgb(245, 241, 241);">
 
-              <div id="selectedItemDetail">
-                <tr style="background-color: rgb(245, 241, 241);">
+                <td>
+                  <p id="product Id">productId: <span style="color: black; font-weight: bold;">000000</span></p>
+                  <p title="Catagory">Cat. <span style="color: black; font-weight: bold;">Electronics</span></p>
+                </td>
 
-                  <td>
-                    <p id="product Id">productId: <span style="color: black; font-weight: bold;">000000</span></p>
-                    <p title="Catagory">Cat. <span style="color: black; font-weight: bold;">Electronics</span></p>
-                  </td>
+                <td>
+                  <p>Price: <span style="color: black; font-weight: bold;">000000</span></p>
+                  <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input min="0" max="10"
+                        type="number" style="width: 35px; " value="1"></span></p>
+                </td>
+              </tr> -->
 
-                  <td>
-                    <p>Price: <span style="color: black; font-weight: bold;">000000</span></p>
-                    <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input min="0" max="10"
-                          type="number" style="width: 35px; " value="1"></span></p>
-                  </td>
-                </tr>
-              </div>
-
-
+            </tbody>
+            <tfoot>
+              <tr id="subTotalShow" style="visibility: hidden">
+                <td>Sub Total:</td>
+                <td>$ <span id="subTotal" style="color: black; font-weight: bold;">0</span></td>
+              </tr>
               <tr>
                 <td>Delivery-Charge:</td>
                 <td>$ <span id="delivery-charge" style="color: black; font-weight: bold;">20</span></td>
@@ -90,13 +85,12 @@
                 <td>Total-Tax:</td>
                 <td>$ <span id="total-tax" style="color: black; font-weight: bold;">0</span></td>
               </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th scope="row">Total</th>
-                  <td colspan="2">$ <span id="total" style="color: black; font-weight: bold;">0</span></td>
-                </tr>
-              </tfoot>
+
+              <tr>
+                <th scope="row">Total</th>
+                <td colspan="2">$ <span id="total" style="color: black; font-weight: bold;">0</span></td>
+              </tr>
+            </tfoot>
           </table>
           <div class="parces text-center">
             <button class="btn btn-primary text-center">Buy Now</button>
@@ -108,7 +102,7 @@
   <footer></footer>
 
   <!-- add javascript  file  -->
-  <script src="./js/app.js"></script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>

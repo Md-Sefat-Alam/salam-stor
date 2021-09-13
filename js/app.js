@@ -1,16 +1,18 @@
+let data;
+let productsSelectedId = [];
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      showProducts(data);
-      console.log(data)
+      // showProducts(data);
+      // console.log(data)
       // const localData = JSON.stringify(data);
       // localStorage.setItem("data", localData)
     });
-  // const getLocalData = localStorage.getItem('data');
-  // data = JSON.parse(getLocalData);
-  // console.log(data)
+  const getLocalData = localStorage.getItem('data');
+  data = JSON.parse(getLocalData);
+  console.log(data)
 };
 loadProducts();
 
@@ -41,24 +43,73 @@ const showProducts = (products) => {
                         </div>
 
                         <h2>Price: $ ${product.price}</h2>
-                        <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
+                        <button onclick="addToCart(${product.id}, ${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
                         <button id="details-btn" class="btn btn-danger">Details</button>
                       </div>`;
     document.getElementById("all-products").appendChild(div);
   }
 };
-let count = 0;
-const addToCart = (id, price) => {
-  count = count + 1;
-  updatePrice("total", price);
 
-  updateTaxAndCharge();
-  document.getElementById("total-Products").innerText = count;
+const addToCart = (id, price) => {
+  // console.log(id)
+  // console.log(price)
+  // count = count + 1;
+  // updatePrice("total", price);
+  // updateTaxAndCharge();
+
+  if (!productsSelectedId.includes(id)) {
+    productsSelectedId.push(id);
+  }
+
+  document.getElementById("total-Products").innerText = productsSelectedId.length;
+  showSelectedItem(productsSelectedId);
 };
+
+
+const showSelectedItem = (selectedId) => {
+  const selectedItemDetail = document.getElementById('selectedItemDetail');
+  selectedItemDetail.textContent = '';
+  for (const singleId of selectedId) {
+    for (const serverId of data) {
+      if (singleId === serverId.id) {
+        const tr = document.createElement('tr');
+        tr.style = 'background-color: rgb(245, 241, 241);'
+        tr.innerHTML = `
+      <td>
+        <p id="product Id">productId: <span style="color: black; font-weight: bold;">${serverId.id}</span></p>
+        <p title="Catagory">Cat. <span style="color: black; font-weight: bold;">${serverId.category}</span></p>
+      </td>
+
+      <td>
+        <p>Price: <span class = 'productPriceing' style="color: black; font-weight: bold;">${serverId.price}</span></p>
+        <p title="Quantity">Q. <span style="color: black; font-weight: bold;"><input min="0" max="10"
+              type="number" style="width: 35px; " value="1"></span></p>
+      </td>`
+        selectedItemDetail.appendChild(tr);
+        const changeToSelect = window.event.target.parentNode;
+        changeToSelect.style = "border: 1px solid lightgray; border-radius: 20px;box-shadow: inset 1px 1px 30px gray;";
+      }
+    }
+  }
+  updateSubTotal();
+}
+
+const updateSubTotal = () => {
+  const getSubTotal = document.querySelectorAll('.productPriceing');
+  let subTotal = 0;
+  for (const singlePrice of getSubTotal) {
+    subTotal += parseFloat(singlePrice.innerText)
+  }
+  if (productsSelectedId.length !== 0) {
+    document.getElementById('subTotalShow').style = 'visibility: visible;background-color: rgb(215, 241, 241);'
+  }
+  document.getElementById('subTotal').innerText = subTotal.toFixed(2);
+}
+
 
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
-  const converted = parseInt(element);
+  const converted = parseFloat(element);
   return converted;
 };
 
@@ -153,3 +204,11 @@ document.getElementById('search-btn').addEventListener('click', () => {
     document.title = "Salam Stor"
   }
 })
+
+
+document.getElementById("selectedItemDetail").addEventListener('click', function (event) {
+  console.log('clicked')
+})
+
+
+showProducts(data);
