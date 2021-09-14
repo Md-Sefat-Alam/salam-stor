@@ -31,8 +31,9 @@ header{
   padding-left: 15px;
   color: black;
   outline: none;
-  width: 60%;
+  width: 50%;
 }
+
 .search-field input:focus{
   border-color: rgba(0, 128, 0, 0.63);
 }
@@ -68,7 +69,7 @@ header{
   padding: 10px 50px;
   border-radius: 25px;
   margin-left: 20px;
-  width: 20%;
+  width: 100px;
 }
 #all-products {
   display: grid;
