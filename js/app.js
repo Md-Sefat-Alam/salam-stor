@@ -22,6 +22,7 @@ const loadProducts = () => {
   fetch(url)
     .then((response) => response.json())
     .then((serverData) => {
+      document.getElementById("all-products").textContent = "";
       showProducts(serverData);
     });
 };
